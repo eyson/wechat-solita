@@ -1,0 +1,12 @@
+page {
+    background-color: #ededed;
+}
+
+.weui-select {
+    border-right: none;
+    padding-left: 0;
+}
+
+.weui-cell_select {
+    border-bottom: 1rpx solid #d9d9d9;
+}

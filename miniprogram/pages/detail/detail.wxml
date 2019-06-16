@@ -1,0 +1,99 @@
+<view class="page">
+    <view class="weui-panel">
+        <!-- 标题 -->
+        <view class="weui-media-box weui-media-box_appmsg" style="padding-top: 10px;padding-bottom: 10px;">
+            <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                <!-- <open-data type="userAvatarUrl"></open-data> -->
+                <image class="weui-media-box__thumb " src="{{detail.avatarUrl}}" />
+            </view>
+            <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                <view class="weui-media-box__title">
+                    <span class="ui-font-red" wx:if="{{detail.status==1}}">[已结束]</span>{{detail.title}}
+                </view>
+                <wxs src="./../../wxs/global.wxs" module="global" />
+                <view class="weui-media-box__desc">{{global.getSceneName(detail.sceneIndex)}} · {{global.formatDateTime(detail.createTime)}}</view>
+            </view>
+        </view>
+
+        <!-- 上限 -->
+        <view class="ui-title">报名上限</view>
+        <view class="ui-content">最大上限 <span class="ui-font-red">{{detail.maximum}}</span> 人</view>
+
+        <!-- 价格 -->
+        <view class="ui-title" wx:if="{{detail.sceneIndex==1}}">商品价格</view>
+        <view class="ui-content ui-font-red" style="font-size:18px;" wx:if="{{detail.sceneIndex==1}}">￥{{detail.amount}}</view>
+
+        <!-- 内容 -->
+        <view class="ui-title" wx:if="{{detail.sceneIndex==0}}">活动内容</view>
+        <view class="ui-title" wx:if="{{detail.sceneIndex==1}}">商品描述</view>
+        <view class="ui-content">{{detail.content}}</view>
+
+        <!-- 用户 -->
+        <view class="ui-title">参与用户({{userList.length}})</view>
+        <view class="weui-loadmore weui-loadmore_line" wx:if="{{userList.length==0}}">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        </view>
+        <!-- 数据列表 [[-->
+        <view class="ui-list-item" wx:for="{{userList}}" wx:key="_id">
+            <view class="weui-media-box weui-media-box_appmsg">
+                <view class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width: 32px;height: 32px;">
+                    <!-- <open-data type="userAvatarUrl"></open-data> -->
+                    <image class="weui-media-box__thumb " src="{{item.avatarUrl}}" />
+                </view>
+                <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title" style="font-size: 14px;">{{item.nickName}}
+                        <span wx:if="{{item.status==1}}" class="ui-font-red">(已完成)</span>
+                    </view>
+                    <view class="weui-media-box__desc">{{global.formatDateTime(item.createTime)}}</view>
+                </view>
+                <view class="">
+                    <view class="ui-like ui-font-green"># {{index+1}}</view>
+                </view>
+            </view>
+            <view class="ui-content">
+                <view wx:if="{{detail.sceneIndex==1}}">数量：{{item.quantity}} x 价格：{{detail.amount}} = 合计：￥{{detail.amount*item.quantity}}</view>
+                <p>{{item.memo}}</p>
+            </view>
+            <view class="weui-flex" wx:if="{{isCreator}}">
+                <view class="weui-flex__item"></view>
+                <view>
+                    <button bindtap="confirm" size="mini" class="weui-btn mini-btn" type="default" data-id="{{item._id}}" wx:if="{{item.status==0}}">已完成?</button>
+                    <button bindtap="cancel" size="mini" class="weui-btn mini-btn" type="warn" data-id="{{item._id}}" wx:else>未完成?</button>
+                </view>
+            </view>
+        </view>
+        <!-- 数据列表 ]]-->
+    </view>
+
+    <!-- 操作 -->
+    <view class="ui-button-fixed" wx:if="{{detail.status==0}}">
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <navigator url="/pages/index/index" open-type="reLaunch">
+                    <button class="weui-btn ui-btn" type="default" bindtap="goHome">我的记录</button>
+                </navigator>
+            </view>
+
+            <!-- 创建者可以结束活动 -->
+            <view class="weui-flex__item" wx:if="{{isCreator}}">
+                <button class="weui-btn ui-btn" type="warn" bindtap="cancelPost">结束报名</button>
+            </view>
+
+            <!-- 未报名 -->
+            <view class="weui-flex__item" wx:elif="{{!isApply}}">
+                <navigator url="/pages/apply/apply?id={{detail._id}}&sceneIndex={{detail.sceneIndex}}" wx:if="{{isLogin}}">
+                    <button class="weui-btn ui-btn" type="primary" wx:if="{{isLogin}}" disabled="{{userList.length >= detail.maximum}}">立即报名</button>
+                </navigator>
+                <button class="weui-btn ui-btn" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" disabled="{{userList.length >= detail.maximum}}" wx:else>立即报名</button>
+            </view>
+
+            <!-- 已报名 -->
+            <view class="weui-flex__item" wx:else>
+                <button class="weui-btn ui-btn" type="warn" bindtap="cancelApply">取消报名</button>
+            </view>
+            <view class="weui-flex__item">
+                <button class="weui-btn ui-btn" type="default" open-type="share">转发分享</button>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,0 +1,16 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/detail/detail",
+        "pages/post/post",
+        "pages/apply/apply"
+    ],
+    "window": {
+        "backgroundColor": "#353535",
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#353535",
+        "navigationBarTitleText": "Wechat Solita",
+        "navigationBarTextStyle": "white"
+    },
+    "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,69 @@
+<!-- 头部 -->
+<view class="ui-header">
+    <view class="weui-flex">
+        <view class="ui-avatar">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class="weui-flex__item">
+            <view class="ui-nickname">
+                <open-data type="userNickName"></open-data>
+            </view>
+        </view>
+        <view class="ui-post">
+            <navigator url="/pages/post/post" wx:if="{{isLogin}}">
+                <button class="weui-btn" type="primary" size="mini">发起接龙</button>
+            </navigator>
+            <button class="weui-btn" type="primary" size="mini" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" wx:else>发起接龙</button>
+        </view>
+    </view>
+</view>
+
+<!-- 列表 -->
+<view class="page">
+
+    <!-- 暂无数据 [[-->
+    <view class="weui-panel" wx:if="{{isEmpty}}">
+        <!-- 列表标题 -->
+        <view class="ui-title">我的记录</view>
+        <view class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        </view>
+    </view>
+    <!-- 暂无数据 ]]-->
+
+    <!-- 我的数据 [[-->
+    <view class="weui-panel" wx:else>
+        <!-- 列表标题 -->
+        <view class="ui-title">我的记录</view>
+        <!-- 数据列表 [[-->
+        <view class="ui-list-item" wx:for="{{resultRows}}" wx:key="_id">
+            <navigator url="/pages/detail/detail?id={{item.postId}}&status={{item.postInfo.status}}&&isCreator={{item.isCreator}}&sceneIndex={{item.postInfo.sceneIndex}}" hover-class="none">
+                <view class="weui-media-box weui-media-box_appmsg">
+                    <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <!-- <open-data type="userAvatarUrl"></open-data> -->
+                        <image src="{{item.postInfo.avatarUrl}}" class="ui-avatar"></image>
+                        <!-- <image class="weui-media-box__thumb " src="{{icon60}}" /> -->
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{item.postInfo.title}}</view>
+                        <wxs src="./../../wxs/global.wxs" module="global" />
+                        <view class="weui-media-box__desc">{{item.postInfo.nickName}} · {{global.formatDate(item.createTime)}}</view>
+                    </view>
+                    <view class="" wx:if="{{item.isCreator>0}}">
+                        <view class="ui-like ui-font-red">♥</view>
+                    </view>
+                </view>
+                <view class="ui-content">{{item.postInfo.content}}</view>
+                <view class="weui-media-box weui-media-box_appmsg ui-toolbar">
+                    <view class="ui-mr-8">
+                        <span class="ui-font-red" wx:if="{{item.postInfo.status == 1}}">∞ 已结束</span>
+                        <span class="ui-font-green" wx:else>∞ 进行中</span>
+                    </view>
+                    <view class="ui-mr-8">♯ {{global.getSceneName(item.postInfo.sceneIndex)}}</view>
+                </view>
+            </navigator>
+        </view>
+        <!-- 数据列表 ]]-->
+    </view>
+    <!--]] 我的数据 -->
+</view>

@@ -1,0 +1,55 @@
+<view class="page">
+    <form bindsubmit="bindSubmit">
+        <!-- 表单 -->
+        <view class="weui-cells weui-cells_after-title">
+
+            <!-- 报名模块 -->
+            <view>
+                <!-- 姓名 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">姓名</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="text" name="name" confirm-type="next" maxlength="12" class="weui-input" placeholder="请输入姓名" />
+                    </view>
+                </view>
+
+                <!-- 姓名 -->
+                <view class="weui-cell weui-cell_input" wx:if="{{sceneIndex==0}}">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">手机</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="number" name="mobile" confirm-type="next" maxlength="11" class="weui-input" placeholder="请输入手机号码" />
+                    </view>
+                </view>
+
+                <!-- 数量 -->
+                <view class="weui-cell weui-cell_input" wx:if="{{sceneIndex==1}}">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">数量</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="number" name="quantity" confirm-type="next" class="weui-input" placeholder="例如：1" />
+                    </view>
+                </view>
+
+                <!-- 备注 -->
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea name="memo" confirm-type="done" maxlength="100" bindinput="bindInput" class="weui-textarea" placeholder="备注，不超过100字" auto-height="{{true}}" />
+                        <view class="weui-textarea-counter">{{contentSize}}/100</view>
+                    </view>
+                </view>
+
+            </view>
+        </view>
+
+        <!-- 提交按钮 -->
+        <view class="ui-button">
+            <button class="weui-btn" type="primary" form-type="submit">提交报名</button>
+        </view>
+
+    </form>
+</view>

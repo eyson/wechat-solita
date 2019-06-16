@@ -1,0 +1,127 @@
+<view class="page">
+    <form bindsubmit="bindSubmit">
+        <!-- 表单 -->
+        <view class="weui-cells weui-cells_after-title">
+
+            <!-- 场景 -->
+            <view class="weui-cell weui-cell_select">
+                <view class="weui-cell__hd weui-cell__hd_in-select-after">
+                    <view class="weui-label">选择场景</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <picker bindchange="bindSceneChange" value="{{sceneIndex}}" range="{{scenes}}" name="sceneIndex">
+                        <view class="weui-select">{{scenes[sceneIndex]}}</view>
+                    </picker>
+                </view>
+            </view>
+
+            <!-- 活动模块 -->
+            <view wx:if="{{sceneIndex==0}}">
+                <!-- 报名上限 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">报名上限</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input confirm-type="next" name="maximum" type="number" max="1000" min="1" class="weui-input" placeholder="最大上限1000" value="1000" />
+                    </view>
+                </view>
+
+                <!-- 活动主题 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">活动主题</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input confirm-type="next"  name="title" maxlength="12" class="weui-input" placeholder="例如：大学同学会" />
+                    </view>
+                </view>
+
+                <!-- 活动内容 -->
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea name="content" maxlength="200" bindinput="bindInput" class="weui-textarea" placeholder="活动内容，不超过200字" auto-height="{{true}}" />
+                        <view class="weui-textarea-counter">{{contentSize}}/200</view>
+                    </view>
+                </view>
+
+                <!-- 说明 -->
+                <!-- <view class="weui-cells__title">参与者需要填写的内容</view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">姓名</view>
+                    <view class="weui-cell__ft">必填</view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">手机</view>
+                    <view class="weui-cell__ft">必填</view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">备注</view>
+                    <view class="weui-cell__ft">选填</view>
+                </view> -->
+            </view>
+
+            <!-- 拼团模块 -->
+            <view wx:if="{{sceneIndex==1}}">
+                <!-- 报名上限 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">报名上限</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input confirm-type="next" name="maximum" type="number" max="1000" min="1" class="weui-input" placeholder="最大上限1000" value="1000" />
+                    </view>
+                </view>
+
+                <!-- 商品名称 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">商品名称</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input name="title" confirm-type="next" maxlength="12" class="weui-input" placeholder="例如：北京烤鸭" />
+                    </view>
+                </view>
+
+                <!-- 商品价格 -->
+                <view class="weui-cell weui-cell_input">
+                    <view class="weui-cell__hd">
+                        <view class="weui-label">商品价格</view>
+                    </view>
+                    <view class="weui-cell__bd">
+                        <input type="digit" name="amount" confirm-type="next" class="weui-input" placeholder="例如：9.9" />
+                    </view>
+                </view>
+
+                <!-- 商品内容 -->
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">
+                        <textarea name="content" maxlength="200" bindinput="bindInput" class="weui-textarea" placeholder="商品描述，不超过200字" auto-height="{{true}}" />
+                        <view class="weui-textarea-counter">{{contentSize}}/200</view>
+                    </view>
+                </view>
+
+                <!-- 说明 -->
+                <!-- <view class="weui-cells__title">参与者需要填写的内容</view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">姓名</view>
+                    <view class="weui-cell__ft">必填</view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">数量</view>
+                    <view class="weui-cell__ft">必填</view>
+                </view>
+                <view class="weui-cell">
+                    <view class="weui-cell__bd">备注</view>
+                    <view class="weui-cell__ft">选填</view>
+                </view> -->
+            </view>
+        </view>
+
+        <!-- 提交按钮 -->
+        <view class="ui-button">
+            <button class="weui-btn" type="primary" form-type="submit">确认发布</button>
+        </view>
+
+    </form>
+</view>

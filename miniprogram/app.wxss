@@ -1,0 +1,7 @@
+/**app.wxss**/
+
+@import "./lib/weui.wxss"
+
+.ui-button {
+    padding: 20px 15px;
+}

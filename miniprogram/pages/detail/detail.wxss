@@ -1,0 +1,98 @@
+/**
+ * 重置weui样式
+ */
+
+.weui-panel {
+    padding: 0px 15px;
+}
+
+.weui-panel:before, .weui-panel:after {
+    border: none;
+}
+
+.weui-media-box__hd_in-appmsg {
+    width: 50px;
+    height: 50px;
+}
+
+.weui-media-box__title {
+    font-size: 18px;
+    color: #000;
+}
+
+.weui-media-box__desc {
+    font-size: 12px;
+    color: #888;
+}
+
+.weui-media-box:before {
+    border: none;
+}
+
+.weui-media-box {
+    padding: 4px 0px;
+}
+
+/**
+ * 自定义样式
+ */
+
+.ui-title {
+    margin: 8px 0;
+    font-size: 18px;
+    color: #000;
+}
+
+.ui-like {
+    font-size: 12px;
+}
+
+.ui-content {
+    color: #888888;
+    font-size: 14px;
+    padding: 0px 0px 8px 0px;
+}
+
+.ui-list-item {
+    border-top: 1px solid #d8d8d8;
+    /* margin-bottom: 8px; */
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.ui-list-item:last-child{
+    border-bottom: 1px solid #d8d8d8;
+    margin-bottom: 56px;
+}
+
+.ui-mr-8 {
+    margin-right: 8px;
+}
+
+.ui-font-red {
+    color: #e64340;
+}
+
+.ui-font-gray {
+    color: #d8d8d8;
+}
+
+.ui-font-green{
+    color: #09BB07;
+}
+
+.ui-button-fixed{
+    width: 100%;
+    padding-top: 5px;
+    position: fixed;
+    bottom: 0px;
+    background-color: #d9d9d9;
+}
+
+.ui-btn{
+    border-radius: 0;
+    border: none;
+}
+.ui-btn:after{
+    border-radius: 0;
+    border: none;
+}
