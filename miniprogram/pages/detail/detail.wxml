@@ -1,9 +1,13 @@
 <view class="page">
+    <view wx:if="{{fileList.length > 0}}">
+        <view wx:for="{{fileList}}" wx:key="fileID">
+        <image src="{{item.tempFileURL}}" style="width: 100%;" mode="scaleToFill"></image>
+        </view>
+    </view>
     <view class="weui-panel">
         <!-- 标题 -->
         <view class="weui-media-box weui-media-box_appmsg" style="padding-top: 10px;padding-bottom: 10px;">
             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                <!-- <open-data type="userAvatarUrl"></open-data> -->
                 <image class="weui-media-box__thumb " src="{{detail.avatarUrl}}" />
             </view>
             <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -29,7 +33,7 @@
         <view class="ui-content">{{detail.content}}</view>
 
         <!-- 用户 -->
-        <view class="ui-title">参与用户({{userList.length}})</view>
+        <view class="ui-title">参与用户({{userList.length}}/{{detail.maximum}})</view>
         <view class="weui-loadmore weui-loadmore_line" wx:if="{{userList.length==0}}">
             <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
         </view>
@@ -42,7 +46,8 @@
                 </view>
                 <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <view class="weui-media-box__title" style="font-size: 14px;">{{item.nickName}}
-                        <span wx:if="{{item.status==1}}" class="ui-font-red">(已完成)</span>
+                        <span wx:if="{{item.isCreator==1}}" class=""> · 团长</span>
+                        <span wx:elif="{{item.status==1}}" class="ui-font-red">(已完成)</span>
                     </view>
                     <view class="weui-media-box__desc">{{global.formatDateTime(item.createTime)}}</view>
                 </view>
@@ -56,7 +61,7 @@
             </view>
             <view class="weui-flex" wx:if="{{isCreator}}">
                 <view class="weui-flex__item"></view>
-                <view>
+                <view wx:if="{{!item.isCreator}}">
                     <button bindtap="confirm" size="mini" class="weui-btn mini-btn" type="default" data-id="{{item._id}}" wx:if="{{item.status==0}}">已完成?</button>
                     <button bindtap="cancel" size="mini" class="weui-btn mini-btn" type="warn" data-id="{{item._id}}" wx:else>未完成?</button>
                 </view>

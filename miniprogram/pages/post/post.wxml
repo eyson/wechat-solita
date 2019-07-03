@@ -33,7 +33,7 @@
                         <view class="weui-label">活动主题</view>
                     </view>
                     <view class="weui-cell__bd">
-                        <input confirm-type="next"  name="title" maxlength="12" class="weui-input" placeholder="例如：大学同学会" />
+                        <input confirm-type="next" name="title" maxlength="12" class="weui-input" placeholder="例如：大学同学会" />
                     </view>
                 </view>
 
@@ -115,6 +115,23 @@
                     <view class="weui-cell__bd">备注</view>
                     <view class="weui-cell__ft">选填</view>
                 </view> -->
+            </view>
+
+            <!-- 上传图片 -->
+            <view class="weui-cell weui-cell_input">
+                <view class="weui-cell__hd">
+                    <view class="weui-label">图片(限1张)</view>
+                </view>
+                <view class="weui-uploader__files" id="uploaderFiles">
+                    <block wx:for-items="{{files}}" wx:key="{{index}}">
+                        <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                            <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                        </view>
+                    </block>
+                </view>
+                <view class="weui-uploader__input-box">
+                    <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                </view>
             </view>
         </view>
 

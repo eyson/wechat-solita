@@ -30,6 +30,8 @@ exports.main = async(event, context) => {
         title: event.title,
         // 内容
         content: event.content,
+        // 图片
+        fileID: event.fileID,
         // 场景
         sceneIndex: event.sceneIndex, // 0-活动，1-拼团
         // 当场景为1时才有（拼团专用字段）

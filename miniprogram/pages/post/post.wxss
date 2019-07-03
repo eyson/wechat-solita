@@ -10,3 +10,8 @@ page {
 .weui-cell_select {
     border-bottom: 1rpx solid #d9d9d9;
 }
+
+.weui-uploader__file, .weui-uploader__input-box{
+    margin-top: 9px;
+    /* margin-left: 9px; */
+}

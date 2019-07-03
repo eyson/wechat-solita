@@ -27,6 +27,8 @@ Page({
         isEmpty: true,
         // 详情
         detail: {},
+        // 图片列表
+        fileList: [],
         // 报名用户列表
         userList: []
     },
@@ -119,8 +121,10 @@ Page({
         let page = pages[pages.length - 1];
         let options = page.options;
         // console.log(page);
+        let title = this.data.detail.title;
+        let type = this.data.detail.sceneIndex == 0 ? '活动' : '拼团';
         return {
-            title: '',
+            title: `${type} | ${title}`,
             desc: '',
             path: `/${page.route}?id=${options.id}`
         };
@@ -181,6 +185,21 @@ Page({
                 isCreator: res.result.isCreator,
                 isEmpty: rows.length > 0 ? false : true
             });
+
+            // 下载图片
+            if (rows[0] && rows[0].fileID){
+                wx.cloud.getTempFileURL({
+                    fileList: [rows[0].fileID],
+                    success: res => {
+                        console.log(res);
+
+                        // 保存图片
+                        this.setData({
+                            fileList: res.fileList
+                        });
+                    }
+                });
+            }
 
             // 隐藏loading
             wx.hideLoading();

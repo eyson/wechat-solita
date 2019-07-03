@@ -18,6 +18,8 @@ Page({
         userInfo: {},
         // 内容大小限制为100字符
         contentSize: 0,
+        // 解决textarea组件在表单提交时无法获取内容的BUG
+        memo: ''
     },
 
     /**
@@ -209,6 +211,7 @@ Page({
     bindInput: function (e) {
         let v = e.detail ? e.detail.value : '';
         this.setData({
+            memo: v,
             contentSize: v.length
         });
         // console.log(e);

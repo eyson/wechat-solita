@@ -13,6 +13,8 @@ Page({
      * 页面的初始数据
      */
     data: {
+        // 解决textarea组件在表单提交时无法获取内容的BUG
+        content: '',
         // 保存用户信息
         userInfo: {},
         // 内容大小限制为200字符
@@ -21,6 +23,9 @@ Page({
         scenes: ["活动", "拼团"],
         // 默认的场景
         sceneIndex: 0,
+        // 上传文件-文件列表
+        files: [],
+        fileID: ''
     },
 
     /**
@@ -103,7 +108,8 @@ Page({
         // console.log('Scenes:', e.detail.value);
 
         this.setData({
-            sceneIndex: e.detail.value
+            sceneIndex: e.detail.value,
+            fileID: ''
         })
     },
     
@@ -120,6 +126,12 @@ Page({
         }
         let data = e.detail ? e.detail.value : {};
         let userInfo = this.data.userInfo;
+        // 解决textarea组件在表单提交时无法获取内容的BUG
+        data.content = this.data.content;
+
+        // 图片
+        data['fileID'] = this.data.fileID;
+
         // 增加用户信息
         data['nickName'] = userInfo.nickName;
         data['avatarUrl'] = userInfo.avatarUrl;
@@ -202,6 +214,7 @@ Page({
     bindInput: function(e){
         let v = e.detail ? e.detail.value : '';
         this.setData({
+            content: v,
             contentSize: v.length
         });
         // console.log(e);
@@ -218,5 +231,82 @@ Page({
         });
 
         // console.log(this.data.userInfo);
+    },
+
+    /**
+     * 选择图片
+     */
+    chooseImage: function (e) {
+        var that = this;
+        wx.chooseImage({
+            // 只能上传一张
+            count: 1,
+            // 可以指定是原图还是压缩图，默认二者都有
+            sizeType: ['original', 'compressed'],
+            // 可以指定来源是相册还是相机，默认二者都有
+            sourceType: ['album', 'camera'], 
+            success: function (res) {
+                wx.showLoading({
+                    title: '图片上传中...',
+                });
+
+                let filePath = res.tempFilePaths[0];
+
+                // 返回选定照片的本地文件路径列表
+                // tempFilePath可以作为img标签的src属性显示图片
+                that.setData({
+                    // 只能上传一张，每次会覆盖
+                    files: res.tempFilePaths
+                    // files: that.data.files.concat(res.tempFilePaths)
+                });
+                // console.log(res);
+                // console.log(that.data.files);
+                
+                
+                // get file EXT,for .jpg
+                let ext = filePath.match(/\.[^.]+?$/)[0];
+                let sceneIndex = that.data.sceneIndex;
+                let time = (new Date()).getTime();
+                let rand = parseInt(Math.random() * 100000);
+                let cloudPath = `img_${sceneIndex}_${time}_${rand}${ext}`;
+                console.log(cloudPath);
+                wx.cloud.uploadFile({
+                    cloudPath: cloudPath,
+                    filePath: filePath,
+                    success: function(res){
+                        // todo
+                        console.log(res);
+                        that.setData({
+                            fileID: res.fileID
+                        });
+                    },
+                    fail: function(e){
+                        // todo
+                        console.log(e);
+                    },
+                    complete: function(){
+                        wx.hideLoading();
+                    }
+                });
+            },
+            fail: function(e){
+                console.log('----upload fail----');
+                console.log(e);
+            },
+            complete: function(res){
+                wx.hideLoading();
+            }
+        })
+    },
+    
+    /**
+     * 预览图片
+     * todo: 待完善删除功能
+     */
+    previewImage: function (e) {
+        wx.previewImage({
+            current: e.currentTarget.id, // 当前显示图片的http链接
+            urls: this.data.files // 需要预览的图片http链接列表
+        });
     }
 })
