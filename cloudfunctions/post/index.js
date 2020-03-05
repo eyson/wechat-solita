@@ -54,6 +54,18 @@ exports.main = async(event, context) => {
         createTime: db.serverDate()
     };
 
+    // 检查敏感内容
+    let ret = await cloud.openapi.security.msgSecCheck({
+      content: event.title + event.content
+    });
+
+    // 内容检查不通过，返回一个 promise 错误对象
+    if(ret.errCode !== 0){
+      return new Promise((resolve, reject) => {
+        reject(ret);
+      });
+    }
+
     // 异步写入数据
     let post = await db.collection('post').add({
         data: params
@@ -95,7 +107,7 @@ exports.main = async(event, context) => {
         return res;
     }).catch(err => {
         console.log(err);
-        return err;``
+        return err;
     });
 
     return post;

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "openapi": [
+      "templateMessage.send", // 发送模板消息
+      "security.msgSecCheck", // 检查内容是否含有违法违规内容
+      "security.imgSecCheck"
+    ]
+  }
+}

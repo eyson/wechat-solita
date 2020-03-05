@@ -36,6 +36,18 @@ exports.main = async (event, context) => {
     console.log(postInfo);
     console.log('postinfo data');
 
+    // 检查敏感内容
+    let ret = await cloud.openapi.security.msgSecCheck({
+      content: event.name + event.memo + event.mobile
+    });
+
+    // 内容检查不通过，返回一个 promise 错误对象
+    if (ret.errCode !== 0) {
+      return new Promise((resolve, reject) => {
+        reject(ret);
+      });
+    }
+
     // 报名上限
     let applylist = await db.collection('apply').where({
         // openid: wxContext.OPENID,

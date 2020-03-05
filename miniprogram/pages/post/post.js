@@ -13,6 +13,8 @@ Page({
      * 页面的初始数据
      */
     data: {
+        // 图片上传限制
+        imgUploadMax: 1,
         // 解决textarea组件在表单提交时无法获取内容的BUG
         content: '',
         // 保存用户信息
@@ -240,7 +242,7 @@ Page({
         var that = this;
         wx.chooseImage({
             // 只能上传一张
-            count: 1,
+            count: that.imgUploadMax,
             // 可以指定是原图还是压缩图，默认二者都有
             sizeType: ['original', 'compressed'],
             // 可以指定来源是相册还是相机，默认二者都有
@@ -274,10 +276,33 @@ Page({
                     cloudPath: cloudPath,
                     filePath: filePath,
                     success: function(res){
-                        // todo
+                        // 图片上传成功
                         console.log(res);
                         that.setData({
                             fileID: res.fileID
+                        });
+
+                        // 鉴定敏感图片
+                        let contentType = ext.replace(/\./g, '');
+                        console.log(contentType);
+                        wx.cloud.callFunction({
+                          name: 'imgSecCheck',
+                          data: {
+                            contentType: 'image/png',
+                            fileID: res.fileID
+                          }
+                        }).then(res => {
+                          // 图片上传成功
+                        }).catch(err => {
+                          // 敏感图片，清空参数值
+                          that.setData({
+                            fileID: '',
+                            files: []
+                          });
+                          wx.showModal({
+                            title: '提示',
+                            content: '图片上传失败'
+                          });
                         });
                     },
                     fail: function(e){
