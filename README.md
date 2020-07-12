@@ -113,3 +113,4 @@ cloud.init({
 
 ![圈子报名-小程序-二维码](http://www.eyson.cn/usr/uploads/2019/06/2486414760.jpg)
 ![尤点意思-公众号-二维码](http://www.eyson.cn/usr/uploads/2019/06/1999457739.jpg)
+![微信收款-二维码](http://www.eyson.cn/usr/uploads/2020/07/3774860315.jpeg)
